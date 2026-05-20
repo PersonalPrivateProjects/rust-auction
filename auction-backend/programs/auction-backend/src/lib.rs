@@ -168,7 +168,6 @@ pub mod auction_backend {
         require!(subasta.id == id, ErrorCode::IdIncorrecto);
         require!(ctx.accounts.user.key() == subasta.creador, ErrorCode::NoCreador);
         require!(subasta.estado == 1, ErrorCode::NoActiva);
-        require!(subasta.importe_ganador > 0, ErrorCode::NoTermino);
 
         let now = Clock::get()?.unix_timestamp;
         require!(now >= subasta.fecha_fin, ErrorCode::NoTermino);
