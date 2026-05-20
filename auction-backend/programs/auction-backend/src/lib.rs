@@ -282,7 +282,7 @@ pub struct CrearPuja<'info> {
     pub prev_ganador: UncheckedAccount<'info>,
 
     #[account(
-        init,
+        init_if_needed,
         payer = user,
         space = 8 + 64,
         seeds = [b"puja2222", id.to_le_bytes().as_ref(), user.key().as_ref()],
