@@ -2,11 +2,23 @@
 "use client";
 
 import "./globals.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Connection, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 import { GlobalProvider, useGlobalContext } from "../app/GlobalContext";
+
+const RPC_URL = process.env.NEXT_PUBLIC_SOLANA_RPC_URL || "http://127.0.0.1:8899";
 
 function Header() {
   const { walletAddress, login, logout } = useGlobalContext();
+  const [balance, setBalance] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!walletAddress) { setBalance(null); return; }
+    const conn = new Connection(RPC_URL);
+    conn.getBalance(new PublicKey(walletAddress)).then(
+      (lamports) => setBalance(lamports / LAMPORTS_PER_SOL)
+    ).catch(() => setBalance(null));
+  }, [walletAddress]);
 
   return (
     <header
@@ -27,6 +39,9 @@ function Header() {
           <>
             <span style={{ fontFamily: "monospace", fontSize: "0.95rem" }}>
               {walletAddress.slice(0, 4)}...{walletAddress.slice(-4)}
+            </span>
+            <span style={{ fontSize: "0.9rem", color: "#059669", fontWeight: 700 }}>
+              {balance !== null ? `${balance.toFixed(3)} SOL` : "—"}
             </span>
             <button
               onClick={logout}
