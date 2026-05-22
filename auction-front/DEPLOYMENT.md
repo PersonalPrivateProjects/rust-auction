@@ -52,7 +52,7 @@ anchor build
 anchor deploy
 ```
 
-### 5. Hacer airdrop a las cuentas de prueba
+### 5. Hacer airdrop a las cuentas de prueba (Sustituye por tus propias cuentas de Phantom en Localnet)
 
 ```bash
 solana airdrop 10 52feSF6iGpAXG3migyYvGUx5oh1H4ks5RF3hHXoyfK7G --url http://172.20.110.62:8899
